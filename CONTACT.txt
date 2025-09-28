@@ -1,0 +1,45 @@
+
+---
+
+# RELEASE_NOTES.md (vendor-style release + advisory)
+```markdown
+# AcmeSearch Agent — Release Notes & Security Advisory
+
+## AcmeSearch Agent v1.3 — 2025-09-20 (current)
+**Summary:** Maintenance release with small UX improvements and clarified logging. This is the release shipped in many internal labs.
+
+**Highlights**
+- Clarified CLI help text and banners.
+- Improved log rotation handling in the agent.
+- Documentation updates.
+
+---
+
+## Previous releases
+
+### v1.1 — 2025-06-05
+- Security: fixed improper argument handling in the legacy `SEARCH` feature which could allow user-supplied search terms to be interpreted by the shell under certain system configurations.
+- Note: This release addresses the class of issues described below; customers still running v1.0 are strongly encouraged to upgrade.
+
+### v1.0 — 2024-12-12 (initial)
+- Initial public/internal release. Included a small CLI that accepted search terms and executed a `grep` command to scan local logs.
+
+---
+
+## Security advisory (informational)
+
+**Advisory ID:** ACME-2025-001  
+**Severity:** Medium/High (depends on deployment exposure)  
+**Affected versions:** v1.0 (known), v1.1 patched the primary issue.
+
+**Description:**  
+Versions of AcmeSearch Agent prior to v1.1 performed naive command-line construction when executing log searches — under certain configurations the agent passed user-supplied search terms directly into a shell-invoked `grep` command. If the agent is exposed to untrusted networks (or used behind management networks without strong access controls), a crafted search term could be used to cause unintended shell execution.
+
+**Mitigation / Workaround:**
+- Upgrade to v1.1 or later (v1.3 recommended).
+- Ensure the agent is never exposed to public networks; limit access via firewall/Security Groups to trusted management IPs only.
+- Run the agent under a dedicated, low-privilege OS account (do not run as root).
+- Audit system logs and look for suspicious commands issued near agent activity.
+
+**Notes for operators:**  
+When investigating potential issues with older agents, look for the daemon banner:
