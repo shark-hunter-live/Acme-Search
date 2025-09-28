@@ -1,5 +1,24 @@
 # AcmeSearch Agent (acmesearchd)
 
+
+IMPORTANT NOTE:
+
+vunreabilty related to code execution has been solved
+in previous versions you could add <> symbols and can execute whatever command you want
+
+>> ping 1.1.1.1 <> ls
+>> /home /sys /bin
+
+update your service to make sure this won't repeat
+
+
+
+
+
+
+
+
+
 **AcmeSearch Agent** is a small, lightweight search/diagnostics agent intended for internal use on server fleets.
 It exposes a simple TCP control interface (plain-text CLI) for ad-hoc log searching and basic network diagnostics.
 
